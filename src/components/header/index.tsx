@@ -56,6 +56,7 @@ const Navbar: React.FC<AllProps> = ({ data, loading, errors, children }) => {
                 </NavHeader>
                 <NavCart>
                     <Link to="/cart">Cart</Link>
+                    <CartSpan>{data.items.length}</CartSpan>
                 </NavCart>
             </NavContainer>
             {children}

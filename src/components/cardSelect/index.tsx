@@ -44,7 +44,6 @@ const CardSelect: React.FC<AllProps> = ({
 
     return (
         <Container>
-            {/* <Navbar /> */}
             <CardListItems>
                 {data.map(item => {
                     return <Card item={item} />;

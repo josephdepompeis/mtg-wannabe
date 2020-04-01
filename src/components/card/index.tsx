@@ -11,7 +11,6 @@ const CardContainer = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 10px;
   margin: 15px;
-  cursor: pointer;
   flex: 0 0 25%;
 `;
 
@@ -46,6 +45,7 @@ const AddToCart = styled.button`
   background-color: blue;
   color: #ffffff;
   border-radius: 10px;
+  cursor: pointer;
 `;
 
 interface propsFromComponent {
@@ -70,7 +70,7 @@ const Card: React.FC<Props> = ({ item, addToCart }) => {
             </CardFigure>
             <CardHeader>{item.name}</CardHeader>
             <CardDescription>
-                <CardSetText>{item.set}</CardSetText>
+                <CardSetText>Set: {item.set}</CardSetText>
                 <AddToCart onClick={() => AddItemToCart(item)}>Add To Cart</AddToCart>
             </CardDescription>
         </CardContainer>
