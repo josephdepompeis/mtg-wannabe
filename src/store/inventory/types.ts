@@ -6,6 +6,7 @@ export interface Inventory {
     description: string;
     set?: string;
     currentInventory: number;
+    amount: number;
 }
 
 export enum InventoryActionTypes {

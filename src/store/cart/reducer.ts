@@ -1,6 +1,8 @@
 import { Reducer } from "redux";
+import find from 'lodash/find';
 
 import { CartActionTypes, cartState } from "./types";
+import {Inventory} from "../inventory/types";
 export const initialState: cartState = {
     data: {
         id: 0,
@@ -22,17 +24,29 @@ const reducer: Reducer<cartState> = (state = initialState, action) => {
             return { ...state, loading: false, errors: action.payload };
         }
         case CartActionTypes.ADD_TO_CART: {
+            console.log(state);
+            console.log(action);
+            const  cardAlreadyAdded = find(state.data.items, ['id', action.payload.id]);
+            let updatedItemsState: Inventory[];
+            if (cardAlreadyAdded) {
+                cardAlreadyAdded.amount++;
+                updatedItemsState = state.data.items;
+            } else {
+                updatedItemsState = [...state.data.items, action.payload];
+            }
+
             return {
                 errors: state.errors,
                 loading: state.loading,
                 data: {
                     ...state.data,
                     id: state.data.id,
-                    items: [...state.data.items, action.payload]
+                    items: updatedItemsState
                 }
             };
         }
         case CartActionTypes.REMOVE_FROM_CART: {
+
             return {
                 errors: state.errors,
                 loading: state.loading,

@@ -5,6 +5,7 @@ import {Inventory} from "../../store/inventory/types";
 import {addToCart, removeFromCart} from "../../store/cart/action";
 import {ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
+import {ApplicationState} from "../../store";
 
 const CardContainer = styled.div`
   background-color: #eeeeee;
@@ -58,6 +59,7 @@ const RemoveFromCartButton = styled.button`
 
 interface propsFromComponent {
     item: Inventory;
+    cartItems: any;
 }
 
 interface propsFromDispatch {
@@ -67,12 +69,13 @@ interface propsFromDispatch {
 
 type Props = propsFromComponent & propsFromDispatch;
 
-const Card: React.FC<Props> = ({ item, addToCart, removeFromCart}) => {
+const Card: React.FC<Props> = ({ item, cartItems, addToCart, removeFromCart}) => {
     const AddItemToCart = (item: any) => {
         addToCart(item);
     };
 
     const RemoveItemFromCart = (item: any) => {
+        console.log(cartItems);
         removeFromCart(item);
     };
 
@@ -91,7 +94,9 @@ const Card: React.FC<Props> = ({ item, addToCart, removeFromCart}) => {
     );
 };
 
-const mapStateToProps = () => {};
+const mapStateToProps = ({ cart }: ApplicationState) => ({
+    cartItems: cart
+});
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
     return {
