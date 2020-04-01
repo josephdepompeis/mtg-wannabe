@@ -24,17 +24,17 @@ const reducer: Reducer<cartState> = (state = initialState, action) => {
             return { ...state, loading: false, errors: action.payload };
         }
         case CartActionTypes.ADD_TO_CART: {
-            console.log(state);
-            console.log(action);
-            const  cardAlreadyAdded = find(state.data.items, ['id', action.payload.id]);
+            const cardAlreadyAdded = find(state.data.items, ['id', action.payload.id]);
             let updatedItemsState: Inventory[];
+            // if card already exists in state, update amount
             if (cardAlreadyAdded) {
                 cardAlreadyAdded.amount++;
                 updatedItemsState = state.data.items;
+            // if card does not exist in state, set amount to 1 and add card to state
             } else {
+                action.payload.amount = 1;
                 updatedItemsState = [...state.data.items, action.payload];
             }
-
             return {
                 errors: state.errors,
                 loading: state.loading,
@@ -46,17 +46,26 @@ const reducer: Reducer<cartState> = (state = initialState, action) => {
             };
         }
         case CartActionTypes.REMOVE_FROM_CART: {
-
+            const card = find(state.data.items, ['id', action.payload.id]);
+            // if card amount is greater than one subtract from amount
+            if (card && card.amount > 1) {
+                card.amount--;
+            }
+            // if card amount is 1 or less, remove card from state
+            else {
+                state.data.items = state.data.items.filter(item => item !== card);
+            }
             return {
                 errors: state.errors,
                 loading: state.loading,
                 data: {
                     ...state.data,
                     id: state.data.id,
-                    items: state.data.items.filter(item => item !== action.payload)
+                    items: state.data.items
                 }
             };
         }
+            // items: state.data.items.filter(item => item !== action.payload)
         default: {
             return state;
         }
