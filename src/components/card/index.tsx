@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import styled from "styled-components";
 import {Inventory} from "../../store/inventory/types";
-import {addToCart} from "../../store/cart/action";
+import {addToCart, removeFromCart} from "../../store/cart/action";
 import {ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
 
@@ -40,9 +40,17 @@ const CardDescription = styled.div`
 
 const CardSetText = styled.text``;
 
-const AddToCart = styled.button`
+const AddToCartButton = styled.button`
   padding: 10px;
   background-color: blue;
+  color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+`;
+
+const RemoveFromCartButton = styled.button`
+  padding: 10px;
+  background-color: red;
   color: #ffffff;
   border-radius: 10px;
   cursor: pointer;
@@ -53,14 +61,19 @@ interface propsFromComponent {
 }
 
 interface propsFromDispatch {
-    addToCart: (item: any) => any;
+    addToCart: (item: any) => any,
+    removeFromCart: (item: any) => any;
 }
 
 type Props = propsFromComponent & propsFromDispatch;
 
-const Card: React.FC<Props> = ({ item, addToCart }) => {
+const Card: React.FC<Props> = ({ item, addToCart, removeFromCart}) => {
     const AddItemToCart = (item: any) => {
         addToCart(item);
+    };
+
+    const RemoveItemFromCart = (item: any) => {
+        removeFromCart(item);
     };
 
     return (
@@ -71,7 +84,8 @@ const Card: React.FC<Props> = ({ item, addToCart }) => {
             <CardHeader>{item.name}</CardHeader>
             <CardDescription>
                 <CardSetText>Set: {item.set}</CardSetText>
-                <AddToCart onClick={() => AddItemToCart(item)}>Add To Cart</AddToCart>
+                <AddToCartButton onClick={() => AddItemToCart(item)}>Add To Cart</AddToCartButton>
+                <RemoveFromCartButton onClick={() => RemoveItemFromCart(item)}>Remove From Cart</RemoveFromCartButton>
             </CardDescription>
         </CardContainer>
     );
@@ -81,7 +95,8 @@ const mapStateToProps = () => {};
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
     return {
-        addToCart: (item: any) => dispatch(addToCart(item))
+        addToCart: (item: any) => dispatch(addToCart(item)),
+        removeFromCart: (item: any) => dispatch(removeFromCart(item))
     };
 };
 

@@ -1,10 +1,10 @@
-import { CartActionTypes, Cart, cartState } from "./types";
-import { Inventory } from "../inventory/types";
+import {CartActionTypes} from "./types";
+import {Inventory} from "../inventory/types";
 
-import { ActionCreator, Action, Dispatch } from "redux";
-import { ThunkAction } from "redux-thunk";
+import {Action, ActionCreator, Dispatch} from "redux";
+import {ThunkAction} from "redux-thunk";
 
-import { ApplicationState } from "../index";
+import {ApplicationState} from "../index";
 
 export type AppThunk = ThunkAction<
     void,
@@ -43,6 +43,28 @@ export const addToCart: ActionCreator<ThunkAction<
         } catch (e) {
             return dispatch({
                 type: CartActionTypes.ADD_TO_CART_FAILURE,
+                payload: null
+            });
+        }
+    };
+};
+
+export const removeFromCart: ActionCreator<ThunkAction<
+    void,
+    ApplicationState,
+    Inventory,
+    Action<string>
+    >> = item => {
+    return (dispatch: Dispatch): Action => {
+        console.log("jello");
+        try {
+            return dispatch({
+                type: CartActionTypes.REMOVE_FROM_CART,
+                payload: item
+            });
+        } catch (e) {
+            return dispatch({
+                type: CartActionTypes.REMOVE_FROM_CART_FAILURE,
                 payload: null
             });
         }
