@@ -1,9 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import {Cart} from "../../store/cart/types";
 import {ApplicationState} from "../../store";
+import {Inventory} from "../../store/inventory/types";
 
 const NavContainer = styled.div`
   width: 100%;
@@ -47,7 +48,15 @@ interface propsFromState {
 
 type AllProps = propsFromState;
 
-const Navbar: React.FC<AllProps> = ({ data, loading, errors, children }) => {
+const Navbar: React.FC<AllProps> = ({data, loading, errors, children}) => {
+    const calculateCartItemAmount = (cartItems: Inventory[]) => {
+        let amountTotal = 0;
+        cartItems.forEach(item => {
+            amountTotal = amountTotal + item.amount;
+        });
+        return amountTotal;
+    };
+
     return (
         <div>
             <NavContainer>
@@ -56,7 +65,7 @@ const Navbar: React.FC<AllProps> = ({ data, loading, errors, children }) => {
                 </NavHeader>
                 <NavCart>
                     <Link to="/cart">Cart</Link>
-                    <CartSpan>{data.items.length}</CartSpan>
+                    <CartSpan>{calculateCartItemAmount(data.items)}</CartSpan>
                 </NavCart>
             </NavContainer>
             {children}
@@ -65,12 +74,10 @@ const Navbar: React.FC<AllProps> = ({ data, loading, errors, children }) => {
 };
 
 
-const mapStateToProps = ({ cart }: ApplicationState) => ({
+const mapStateToProps = ({cart}: ApplicationState) => ({
     data: cart.data,
     loading: cart.loading,
     errors: cart.errors
 });
-
-// const mapDispatchProps = () => {};
 
 export default connect(mapStateToProps)(Navbar);

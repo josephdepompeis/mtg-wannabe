@@ -69,13 +69,12 @@ interface propsFromDispatch {
 
 type Props = propsFromComponent & propsFromDispatch;
 
-const Card: React.FC<Props> = ({ item, cartItems, addToCart, removeFromCart}) => {
-    const AddItemToCart = (item: any) => {
+const Card: React.FC<Props> = ({ item, addToCart, removeFromCart}) => {
+    const addItemToCart = (item: any) => {
         addToCart(item);
     };
 
-    const RemoveItemFromCart = (item: any) => {
-        console.log(cartItems);
+    const removeItemFromCart = (item: any) => {
         removeFromCart(item);
     };
 
@@ -87,8 +86,8 @@ const Card: React.FC<Props> = ({ item, cartItems, addToCart, removeFromCart}) =>
             <CardHeader>{item.name}</CardHeader>
             <CardDescription>
                 <CardSetText>Set: {item.set}</CardSetText>
-                <AddToCartButton onClick={() => AddItemToCart(item)}>Add To Cart</AddToCartButton>
-                <RemoveFromCartButton onClick={() => RemoveItemFromCart(item)}>Remove From Cart</RemoveFromCartButton>
+                <AddToCartButton onClick={() => addItemToCart(item)}>Add To Cart</AddToCartButton>
+                <RemoveFromCartButton onClick={() => removeItemFromCart(item)}>Remove From Cart</RemoveFromCartButton>
             </CardDescription>
         </CardContainer>
     );
