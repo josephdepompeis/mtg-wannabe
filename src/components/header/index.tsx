@@ -48,7 +48,7 @@ interface propsFromState {
 
 type AllProps = propsFromState;
 
-const Navbar: React.FC<AllProps> = ({data, loading, errors, children}) => {
+const Header: React.FC<AllProps> = ({data, loading, errors, children}) => {
     const calculateCartItemAmount = (cartItems: Inventory[]) => {
         let amountTotal = 0;
         cartItems.forEach(item => {
@@ -80,4 +80,4 @@ const mapStateToProps = ({cart}: ApplicationState) => ({
     errors: cart.errors
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps)(Header);

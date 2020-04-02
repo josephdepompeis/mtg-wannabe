@@ -1,7 +1,7 @@
 export interface Inventory {
     id: string;
     name: string;
-    price: string;
+    price: number;
     image: string;
     description: string;
     set?: string;

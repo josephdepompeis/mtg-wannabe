@@ -1,7 +1,7 @@
 let inventory = [
     {
         name: "Forest",
-        price: "1",
+        price: 1,
         image: "../images/forest.jpeg",
         description: "Forest Description",
         set: "Throne of Eldraine",
@@ -11,7 +11,7 @@ let inventory = [
     },
     {
         name: "Mountain",
-        price: "1",
+        price: 2,
         image: "../images/mountain.jpeg",
         description: "Mountain Description",
         set: "Ravnica Allegiance",
@@ -21,7 +21,7 @@ let inventory = [
     },
     {
         name: "Plains",
-        price: "1",
+        price: 3,
         image: "../images/plains.jpeg",
         description: "Plains Description",
         set: "Homelands",
@@ -30,7 +30,7 @@ let inventory = [
     },
     {
         name: "Swamp",
-        price: "1",
+        price: 4,
         image: "../images/swamp.jpeg",
         description: "Swamp description",
         set: "Innistrad",
@@ -39,7 +39,7 @@ let inventory = [
     },
     {
         name: "Island",
-        price: "1",
+        price: 5,
         image: "../images/island.jpeg",
         description: "Island Description",
         set: "Odyssey",
