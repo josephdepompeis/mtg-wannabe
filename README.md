@@ -2,9 +2,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 quick app created with Create React App:
 ## Setup:
-clone repository
-npm install
-npm start
+1. clone repository
+2. npm install
+3. npm start
 
 this is very crude code, just wanted to display that i can be functional in react with redux. with more time i would prioritize
 1. tests
