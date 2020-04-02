@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
-import { ApplicationState } from "../../store";
-import { Cart } from "../../store/cart/types";
+import {ApplicationState} from "../../store";
+import {Cart} from "../../store/cart/types";
 import {Inventory} from "../../store/inventory/types";
 import {ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
 import {addToCart, removeFromCart} from "../../store/cart/action";
+
 const CartContainer = styled.div`
   /* height: 100%;
   width: 100%; */
@@ -84,7 +85,9 @@ const CartComponent: React.FC<AllProps> = ({ cartItems, addToCart, removeFromCar
                 <CardAttributeColumn>name</CardAttributeColumn>
                 <CardAttributeColumn>quantity</CardAttributeColumn>
                 <CardAttributeColumn>price</CardAttributeColumn>
+                <CardAttributeColumn></CardAttributeColumn>
             </CartListItemDiv>
+
             <CartListsDiv>
                 {cartItems.items.map(item => {
                     return (
@@ -95,8 +98,7 @@ const CartComponent: React.FC<AllProps> = ({ cartItems, addToCart, removeFromCar
                             <CardAttributeColumn>${calculateCartItemPrice(item)}</CardAttributeColumn>
                             <CardAttributeColumn>
                                 <AddToCartButton onClick={() => addItemToCart(item)}>Add To Cart</AddToCartButton>
-                                <RemoveFromCartButton onClick={() => removeItemFromCart(item)}>Remove From Cart
-                                </RemoveFromCartButton>
+                                <RemoveFromCartButton onClick={() => removeItemFromCart(item)}>Remove From Cart</RemoveFromCartButton>
                             </CardAttributeColumn>
                         </CartListItemDiv>
                     );

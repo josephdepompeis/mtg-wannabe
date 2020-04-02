@@ -75,6 +75,7 @@ const Card: React.FC<Props> = ({item, addToCart, removeFromCart}) => {
     };
 
     const removeItemFromCart = (item: Inventory) => {
+        console.log(item.amount);
         removeFromCart(item);
     };
 
@@ -84,11 +85,11 @@ const Card: React.FC<Props> = ({item, addToCart, removeFromCart}) => {
                 <CardImage src={item.image} />
             </CardFigure>
             <CardHeader>{item.name}</CardHeader>
+            <AddToCartButton onClick={() => addItemToCart(item)}>Add To Cart</AddToCartButton>
+            {(item.amount != 0) && <RemoveFromCartButton onClick={() => removeItemFromCart(item)}>Remove From Cart</RemoveFromCartButton>}
             <CardDescription>
                 <CardSetText>Set: {item.set}</CardSetText>
                 <CardSetText>Price: ${item.price}</CardSetText>
-                <AddToCartButton onClick={() => addItemToCart(item)}>Add To Cart</AddToCartButton>
-                <RemoveFromCartButton onClick={() => removeItemFromCart(item)}>Remove From Cart</RemoveFromCartButton>
             </CardDescription>
         </CardContainer>
     );

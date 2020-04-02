@@ -56,7 +56,6 @@ export const removeFromCart: ActionCreator<ThunkAction<
     Action<string>
     >> = item => {
     return (dispatch: Dispatch): Action => {
-        console.log("jello");
         try {
             return dispatch({
                 type: CartActionTypes.REMOVE_FROM_CART,

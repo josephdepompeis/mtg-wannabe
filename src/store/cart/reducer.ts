@@ -1,8 +1,9 @@
-import { Reducer } from "redux";
+import {Reducer} from "redux";
 import find from 'lodash/find';
 
-import { CartActionTypes, cartState } from "./types";
+import {CartActionTypes, cartState} from "./types";
 import {Inventory} from "../inventory/types";
+
 export const initialState: cartState = {
     data: {
         id: 0,
@@ -47,14 +48,15 @@ const reducer: Reducer<cartState> = (state = initialState, action) => {
         }
         case CartActionTypes.REMOVE_FROM_CART: {
             const card = find(state.data.items, ['id', action.payload.id]);
-            // if card amount is greater than one subtract from amount
-            if (card && card.amount > 1) {
+
+            if (card) {
                 card.amount--;
             }
-            // if card amount is 1 or less, remove card from state
-            else {
+
+            if (card && card.amount === 0) {
                 state.data.items = state.data.items.filter(item => item !== card);
             }
+
             return {
                 errors: state.errors,
                 loading: state.loading,
@@ -65,7 +67,6 @@ const reducer: Reducer<cartState> = (state = initialState, action) => {
                 }
             };
         }
-            // items: state.data.items.filter(item => item !== action.payload)
         default: {
             return state;
         }

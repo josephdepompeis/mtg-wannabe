@@ -27,6 +27,7 @@ let inventory = [
         set: "Homelands",
         currentInventory: 8,
         id: "8338db8c-91c5-4341-81e1-fa350c6baa70",
+        amount: 0
     },
     {
         name: "Swamp",
@@ -36,6 +37,7 @@ let inventory = [
         set: "Innistrad",
         currentInventory: 10,
         id: "d414f81e-0f34-49ca-8fb6-a4b47f622eb9",
+        amount: 0
     },
     {
         name: "Island",
