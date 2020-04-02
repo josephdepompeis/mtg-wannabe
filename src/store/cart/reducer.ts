@@ -48,7 +48,6 @@ const reducer: Reducer<cartState> = (state = initialState, action) => {
         }
         case CartActionTypes.REMOVE_FROM_CART: {
             const card = find(state.data.items, ['id', action.payload.id]);
-
             if (card) {
                 card.amount--;
             }

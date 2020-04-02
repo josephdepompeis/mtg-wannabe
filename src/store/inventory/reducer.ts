@@ -13,7 +13,6 @@ const reducer: Reducer<InventoryState> = (state = initialState, action) => {
             return { ...state, loading: true };
         }
         case InventoryActionTypes.FETCH_SUCCESS: {
-            console.log("action payload", action.payload);
             return { ...state, loading: false, data: action.payload };
         }
         case InventoryActionTypes.FETCH_ERROR: {

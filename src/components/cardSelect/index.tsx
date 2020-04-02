@@ -38,10 +38,10 @@ const CardSelect: React.FC<AllProps> = ({
     data,
     fetchRequest
 }) => {
-    useEffect(() => {
-        fetchRequest();
-    }, []);
-
+    // useEffect(() => {
+    //     fetchRequest();
+    // }, []);
+    useEffect(fetchRequest, []);
     return (
         <Container>
             <CardListItems>
