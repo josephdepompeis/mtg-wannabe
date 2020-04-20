@@ -8,6 +8,7 @@ import {Inventory} from "../../store/inventory/types";
 import {ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
 import {addToCart, removeFromCart} from "../../store/cart/action";
+import useAxios from "axios-hooks";
 
 const CartContainer = styled.div`
   /* height: 100%;
@@ -74,6 +75,14 @@ const CartComponent: React.FC<AllProps> = ({ cartItems, addToCart, removeFromCar
     const removeItemFromCart = (item: Inventory) => {
         removeFromCart(item);
     };
+
+    const [{ data, loading, error }, refetch] = useAxios(
+        '/movies'
+    )
+
+    if (loading) return <p>Loading...</p>
+    if (error) return <p>Error!</p>
+    if (data) return <p>{JSON.stringify(data)}</p>
 
     return (
         <CartContainer>
