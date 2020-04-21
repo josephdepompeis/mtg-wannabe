@@ -56,76 +56,77 @@ const RemoveFromCartButton = styled.button`
 `;
 
 interface propsFromState {
-    cartItems: Cart;
-    addToCart: (item: Inventory) => any,
-    removeFromCart: (item: Inventory) => any;
+	cartItems: Cart;
+	addToCart: (item: Inventory) => any,
+	removeFromCart: (item: Inventory) => any;
 }
 
 type AllProps = propsFromState;
 
-const CartComponent: React.FC<AllProps> = ({ cartItems, addToCart, removeFromCart}) => {
-    const calculateCartItemPrice = (item: Inventory) => {
-        return item.price * item.amount;
-    };
+const CartComponent: React.FC<AllProps> = ({cartItems, addToCart, removeFromCart}) => {
+	const calculateCartItemPrice = (item: Inventory) => {
+		return item.price * item.amount;
+	};
 
-    const addItemToCart = (item: Inventory) => {
-        addToCart(item);
-    };
+	const addItemToCart = (item: Inventory) => {
+		addToCart(item);
+	};
 
-    const removeItemFromCart = (item: Inventory) => {
-        removeFromCart(item);
-    };
+	const removeItemFromCart = (item: Inventory) => {
+		removeFromCart(item);
+	};
 
-    const [{ data, loading, error }, refetch] = useAxios(
-        '/movies'
-    )
+	const [{data, loading, error}, refetch] = useAxios(
+		'/movies'
+	);
 
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>Error!</p>
-    if (data) return <p>{JSON.stringify(data)}</p>
+	if (loading) return <p>Loading...</p>
+	if (error) return <p>Error!</p>
+	if (data) return <p>{JSON.stringify(data)}</p>
 
-    return (
-        <CartContainer>
-            <CartHeaderDiv>
-                <CartHeader>Your Cart</CartHeader>
-            </CartHeaderDiv>
-            <CartListItemDiv>
-                <CardAttributeColumn>image</CardAttributeColumn>
-                <CardAttributeColumn>name</CardAttributeColumn>
-                <CardAttributeColumn>quantity</CardAttributeColumn>
-                <CardAttributeColumn>price</CardAttributeColumn>
-                <CardAttributeColumn></CardAttributeColumn>
-            </CartListItemDiv>
+	return (
+		<CartContainer>
+			<CartHeaderDiv>
+				<CartHeader>Your Cart</CartHeader>
+			</CartHeaderDiv>
+			<CartListItemDiv>
+				<CardAttributeColumn>image</CardAttributeColumn>
+				<CardAttributeColumn>name</CardAttributeColumn>
+				<CardAttributeColumn>quantity</CardAttributeColumn>
+				<CardAttributeColumn>price</CardAttributeColumn>
+				<CardAttributeColumn></CardAttributeColumn>
+			</CartListItemDiv>
 
-            <CartListsDiv>
-                {cartItems.items.map(item => {
-                    return (
-                        <CartListItemDiv>
-                            <CartListItemImage src={item.image} />
-                            <CardAttributeColumn>{item.name}</CardAttributeColumn>
-                            <CardAttributeColumn>{item.amount}</CardAttributeColumn>
-                            <CardAttributeColumn>${calculateCartItemPrice(item)}</CardAttributeColumn>
-                            <CardAttributeColumn>
-                                <AddToCartButton onClick={() => addItemToCart(item)}>Add To Cart</AddToCartButton>
-                                <RemoveFromCartButton onClick={() => removeItemFromCart(item)}>Remove From Cart</RemoveFromCartButton>
-                            </CardAttributeColumn>
-                        </CartListItemDiv>
-                    );
-                })}
-            </CartListsDiv>
-        </CartContainer>
-    );
+			<CartListsDiv>
+				{cartItems.items.map(item => {
+					return (
+						<CartListItemDiv>
+							<CartListItemImage src={item.image}/>
+							<CardAttributeColumn>{item.name}</CardAttributeColumn>
+							<CardAttributeColumn>{item.amount}</CardAttributeColumn>
+							<CardAttributeColumn>${calculateCartItemPrice(item)}</CardAttributeColumn>
+							<CardAttributeColumn>
+								<AddToCartButton onClick={() => addItemToCart(item)}>Add To Cart</AddToCartButton>
+								<RemoveFromCartButton onClick={() => removeItemFromCart(item)}>Remove From
+									Cart</RemoveFromCartButton>
+							</CardAttributeColumn>
+						</CartListItemDiv>
+					);
+				})}
+			</CartListsDiv>
+		</CartContainer>
+	);
 };
 
-const mapStateToProps = ({ cart }: ApplicationState) => ({
-    cartItems: cart.data
+const mapStateToProps = ({cart}: ApplicationState) => ({
+	cartItems: cart.data
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
-    return {
-        addToCart: (item: any) => dispatch(addToCart(item)),
-        removeFromCart: (item: any) => dispatch(removeFromCart(item))
-    };
+	return {
+		addToCart: (item: any) => dispatch(addToCart(item)),
+		removeFromCart: (item: any) => dispatch(removeFromCart(item))
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartComponent);

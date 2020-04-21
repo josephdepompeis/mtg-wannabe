@@ -41,43 +41,44 @@ const CartSpan = styled.span`
 `;
 
 interface propsFromState {
-    data: Cart;
-    loading: boolean;
-    errors?: string;
+	data: Cart;
+	loading: boolean;
+	errors?: string;
 }
 
 type AllProps = propsFromState;
 
 const Header: React.FC<AllProps> = ({data, loading, errors, children}) => {
-    const calculateCartItemAmount = (cartItems: Inventory[]) => {
-        let amountTotal = 0;
-        cartItems.forEach(item => {
-            amountTotal = amountTotal + item.amount;
-        });
-        return amountTotal;
-    };
+	const calculateCartItemAmount = (cartItems: Inventory[]) => {
+		let amountTotal = 0;
+		cartItems.forEach(item => {
+			amountTotal = amountTotal + item.amount;
+		});
+		return amountTotal;
+	};
 
-    return (
-        <div>
-            <NavContainer>
-                <NavHeader>
-                    <Link to="/">Home</Link>
-                </NavHeader>
-                <NavCart>
-                    <Link to="/cart">Cart</Link>
-                    <CartSpan>{calculateCartItemAmount(data.items)}</CartSpan>
-                </NavCart>
-            </NavContainer>
-            {children}
-        </div>
-    );
+	return (
+		<div>
+			<NavContainer>
+				<NavHeader>
+					<Link to="/">Home</Link>
+					<Link to="/login">Login</Link>
+
+				</NavHeader>
+				<NavCart>
+					<Link to="/cart">Cart</Link>
+					<CartSpan>{calculateCartItemAmount(data.items)}</CartSpan>
+				</NavCart>
+			</NavContainer>
+			{children}
+		</div>
+	);
 };
 
-
 const mapStateToProps = ({cart}: ApplicationState) => ({
-    data: cart.data,
-    loading: cart.loading,
-    errors: cart.errors
+	data: cart.data,
+	loading: cart.loading,
+	errors: cart.errors
 });
 
 export default connect(mapStateToProps)(Header);

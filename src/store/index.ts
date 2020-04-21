@@ -10,14 +10,14 @@ import {cartReducer} from "./cart/reducer";
 import {cartState} from "./cart/types";
 
 export interface ApplicationState {
-    cart: cartState;
-    inventory: InventoryState;
-    router: RouterState;
+	cart: cartState;
+	inventory: InventoryState;
+	router: RouterState;
 }
 
 export const createRootReducer = (history: History) =>
-    combineReducers({
-        cart: cartReducer,
-        inventory: InventoryReducer,
-        router: connectRouter(history)
-    });
+	combineReducers({
+		cart: cartReducer,
+		inventory: InventoryReducer,
+		router: connectRouter(history)
+	});
