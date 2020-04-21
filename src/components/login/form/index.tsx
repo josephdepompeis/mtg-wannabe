@@ -1,4 +1,5 @@
 import * as React from "react";
+import {letterSpacing} from "styled-system";
 
 interface IFormProps {
 	/* The http path that the form will be posted to */
@@ -29,6 +30,18 @@ export interface IFormState {
 	submitSuccess?: boolean;
 }
 
+export interface IFormContext extends IFormState {
+	/* Function that allows values in the values state to be set */
+	setValues: (values: IValues) => void;
+}
+
+/*
+ * The context which allows state and functions to be shared with Field.
+ * Note that we need to pass createContext a default value which is why undefined is unioned in the type // using other way
+ */
+export const FormContext = React.createContext({} as IFormContext);
+// export const FormContext:IFormContext;
+
 export class Form extends React.Component<IFormProps, IFormState> {
 	constructor(props: IFormProps) {
 		super(props);
@@ -40,6 +53,14 @@ export class Form extends React.Component<IFormProps, IFormState> {
 			values
 		};
 	}
+
+	/**
+	 * Stores new field values in state
+	 * @param {IValues} values - The new field values
+	 */
+	private setValues = (values: IValues) => {
+		this.setState({ values: { ...this.state.values, ...values } });
+	};
 
 	/**
 	 * Returns whether there are any errors in the errors object that is passed in
@@ -63,6 +84,8 @@ export class Form extends React.Component<IFormProps, IFormState> {
 		e: React.FormEvent<HTMLFormElement>
 	): Promise<void> => {
 		e.preventDefault();
+
+		console.log(this.state.values);
 
 		if (this.validateForm()) {
 			const submitSuccess: boolean = await this.submitForm();
@@ -90,7 +113,13 @@ export class Form extends React.Component<IFormProps, IFormState> {
 
 	public render() {
 		const { submitSuccess, errors } = this.state;
+		const context: IFormContext = {
+			...this.state,
+			setValues: this.setValues
+		};
+
 		return (
+			<FormContext.Provider value={context}>
 			<form onSubmit={this.handleSubmit} noValidate={true}>
 				<div className="container">
 
@@ -124,6 +153,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
 					)}
 				</div>
 			</form>
+			</FormContext.Provider>
 		);
 	}
 }
