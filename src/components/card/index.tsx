@@ -58,51 +58,52 @@ const RemoveFromCartButton = styled.button`
 `;
 
 interface propsFromComponent {
-    item: Inventory;
-    cartItems: any;
+	item: Inventory;
+	cartItems: any;
 }
 
 interface propsFromDispatch {
-    addToCart: (item: Inventory) => any,
-    removeFromCart: (item: Inventory) => any;
+	addToCart: (item: Inventory) => any,
+	removeFromCart: (item: Inventory) => any;
 }
 
 type Props = propsFromComponent & propsFromDispatch;
 
 const Card: React.FC<Props> = ({item, addToCart, removeFromCart}) => {
-    const addItemToCart = (item: Inventory) => {
-        addToCart(item);
-    };
+	const addItemToCart = (item: Inventory) => {
+		addToCart(item);
+	};
 
-    const removeItemFromCart = (item: Inventory) => {
-        removeFromCart(item);
-    };
+	const removeItemFromCart = (item: Inventory) => {
+		removeFromCart(item);
+	};
 
-    return (
-        <CardContainer>
-            <CardFigure>
-                <CardImage src={item.image} />
-            </CardFigure>
-            <CardHeader>{item.name}</CardHeader>
-            <AddToCartButton onClick={() => addItemToCart(item)}>Add To Cart</AddToCartButton>
-            {(item.amount !== 0) && <RemoveFromCartButton onClick={() => removeItemFromCart(item)}>Remove From Cart</RemoveFromCartButton>}
-            <CardDescription>
-                <CardSetText>Set: {item.set}</CardSetText>
-                <CardSetText>Price: ${item.price}</CardSetText>
-            </CardDescription>
-        </CardContainer>
-    );
+	return (
+		<CardContainer>
+			<CardFigure>
+				<CardImage src={item.image}/>
+			</CardFigure>
+			<CardHeader>{item.name}</CardHeader>
+			<AddToCartButton onClick={() => addItemToCart(item)}>Add To Cart</AddToCartButton>
+			{(item.amount !== 0) &&
+            <RemoveFromCartButton onClick={() => removeItemFromCart(item)}>Remove From Cart</RemoveFromCartButton>}
+			<CardDescription>
+				<CardSetText>Set: {item.set}</CardSetText>
+				<CardSetText>Price: ${item.price}</CardSetText>
+			</CardDescription>
+		</CardContainer>
+	);
 };
 
-const mapStateToProps = ({ cart }: ApplicationState) => ({
-    cartItems: cart
+const mapStateToProps = ({cart}: ApplicationState) => ({
+	cartItems: cart
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
-    return {
-        addToCart: (item: any) => dispatch(addToCart(item)),
-        removeFromCart: (item: any) => dispatch(removeFromCart(item))
-    };
+	return {
+		addToCart: (item: any) => dispatch(addToCart(item)),
+		removeFromCart: (item: any) => dispatch(removeFromCart(item))
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Card);
