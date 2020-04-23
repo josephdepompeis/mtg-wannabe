@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FormContext, IFormContext} from "../form";
+import {FormContext, IErrors, IFormContext, IValues} from "../form";
 
 /* The available editors for the field */
 type Editor = "textbox" | "multilinetextbox" | "dropdown";
@@ -19,7 +19,16 @@ export interface IFieldProps {
 
 	/* The field value */
 	value?: any;
+
+	/* The field validator function and argument */
+	validation?: IValidation;
 }
+
+export interface IValidation {
+	rule: (values: IValues, fieldName: string, args: any) => string;
+	args?: any;
+}
+
 
 export const Field: React.SFC<IFieldProps> = ({
 	id,
@@ -28,6 +37,23 @@ export const Field: React.SFC<IFieldProps> = ({
 	options,
 	value
 }) => {
+
+	/**
+	 * Gets the validation error for the field
+	 * @param {IErrors} errors - All the errors from the form
+	 * @returns {string[]} - The validation error
+	 */
+	const getError = (errors: IErrors): string => (errors ? errors[id] : "");
+
+	/**
+	 * Gets the inline styles for editor
+	 * @param {IErrors} errors - All the errors from the form
+	 * @returns {any} - The style object
+	 */
+	const getEditorStyle = (errors: IErrors): any =>
+		getError(errors) ? { borderColor: "red" } : {};
+
+
 	return (
 		<FormContext.Consumer>
 			{(context: IFormContext) => (
@@ -43,10 +69,8 @@ export const Field: React.SFC<IFieldProps> = ({
 								// console.log(e) /* TODO: push change to form values */
 							context.setValues({ [id]: e.currentTarget.value })
 						}
-						onBlur={
-							(e: React.FormEvent<HTMLInputElement>) =>
-								console.log(e) /* TODO: validate field value */
-						}
+						onBlur={() => context.validate(id)}
+						style={getEditorStyle(context.errors)}
 						className="form-control"
 					/>
 				)}
@@ -60,10 +84,8 @@ export const Field: React.SFC<IFieldProps> = ({
 							context.setValues({ [id]: e.currentTarget.value })
 
 						}
-						onBlur={
-							(e: React.FormEvent<HTMLTextAreaElement>) =>
-								console.log(e) /* TODO: validate field value */
-						}
+						onBlur={() => context.validate(id)}
+						style={getEditorStyle(context.errors)}
 						className="form-control"
 					/>
 				)}
@@ -77,10 +99,8 @@ export const Field: React.SFC<IFieldProps> = ({
 								// console.log(e) /* TODO: push change to form values */
 								context.setValues({ [id]: e.currentTarget.value })
 						}
-						onBlur={
-							(e: React.FormEvent<HTMLSelectElement>) =>
-								console.log(e) /* TODO: validate field value */
-						}
+						onBlur={() => context.validate(id)}
+						style={getEditorStyle(context.errors)}
 						className="form-control"
 					>
 						{options &&
@@ -91,7 +111,11 @@ export const Field: React.SFC<IFieldProps> = ({
 						))}
 					</select>
 				)}
-				{/* TODO - display validation error */}
+				{getError(context.errors) && (
+					<div style={{ color: "red", fontSize: "80%" }}>
+						<p>{getError(context.errors)}</p>
+					</div>
+				)}
 			</div>
 		)}
 		</FormContext.Consumer>

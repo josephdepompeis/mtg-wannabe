@@ -1,9 +1,16 @@
 import * as React from "react";
-import {letterSpacing} from "styled-system";
+import {IFieldProps} from "../field";
+
+export interface IFields {
+	[key: string]: IFieldProps;
+}
 
 interface IFormProps {
 	/* The http path that the form will be posted to */
 	action: string;
+
+	/* The props for all the fields on the form */
+	fields: IFields;
 
 	/* A prop which allows content to be injected */
 	render: () => React.ReactNode;
@@ -33,6 +40,9 @@ export interface IFormState {
 export interface IFormContext extends IFormState {
 	/* Function that allows values in the values state to be set */
 	setValues: (values: IValues) => void;
+
+	/* Function that validates a field */
+	validate: (fieldName: string) => void;
 }
 
 /*
@@ -41,6 +51,49 @@ export interface IFormContext extends IFormState {
  */
 export const FormContext = React.createContext({} as IFormContext);
 // export const FormContext:IFormContext;
+
+/**
+ * Validates whether a field has a value
+ * @param {IValues} values - All the field values in the form
+ * @param {string} fieldName - The field to validate
+ * @returns {string} - The error message
+ */
+export const required = (values: IValues, fieldName: string): string =>
+	values[fieldName] === undefined ||
+	values[fieldName] === null ||
+	values[fieldName] === ""
+		? "This must be populated"
+		: "";
+
+/**
+ * Validates whether a field is a valid email
+ * @param {IValues} values - All the field values in the form
+ * @param {string} fieldName - The field to validate
+ * @returns {string} - The error message
+ */
+export const isEmail = (values: IValues, fieldName: string): string =>
+	values[fieldName] &&
+	values[fieldName].search(
+		/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+	)
+		? "This must be in a valid email format"
+		: "";
+
+/**
+ * Validates whether a field is within a certain amount of characters
+ * @param {IValues} values - All the field values in the form
+ * @param {string} fieldName - The field to validate
+ * @param {number} length - The maximum number of characters
+ * @returns {string} - The error message
+ */
+export const maxLength = (
+	values: IValues,
+	fieldName: string,
+	length: number
+): string =>
+	values[fieldName] && values[fieldName].length > length
+		? `This can not exceed ${length} characters`
+		: "";
 
 export class Form extends React.Component<IFormProps, IFormState> {
 	constructor(props: IFormProps) {
@@ -75,6 +128,31 @@ export class Form extends React.Component<IFormProps, IFormState> {
 		});
 		return haveError;
 	}
+
+	/**
+	 * Executes the validation rule for the field and updates the form errors
+	 * @param {string} fieldName - The field to validate
+	 * @returns {string} - The error message
+	 */
+	private validate = (fieldName: string): string => {
+		let newError: string = "";
+
+		if (
+			this.props.fields[fieldName] &&
+			this.props.fields[fieldName].validation
+		) {
+			newError = this.props.fields[fieldName].validation!.rule(
+				this.state.values,
+				fieldName,
+				this.props.fields[fieldName].validation!.args
+			);
+		}
+		this.state.errors[fieldName] = newError;
+		this.setState({
+			errors: { ...this.state.errors, [fieldName]: newError }
+		});
+		return newError;
+	};
 
 	/**
 	 * Handles form submission
@@ -115,7 +193,8 @@ export class Form extends React.Component<IFormProps, IFormState> {
 		const { submitSuccess, errors } = this.state;
 		const context: IFormContext = {
 			...this.state,
-			setValues: this.setValues
+			setValues: this.setValues,
+			validate: this.validate
 		};
 
 		return (
