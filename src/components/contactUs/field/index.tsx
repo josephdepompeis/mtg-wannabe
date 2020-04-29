@@ -53,7 +53,6 @@ export const Field: React.SFC<IFieldProps> = ({
 	const getEditorStyle = (errors: IErrors): any =>
 		getError(errors) ? { borderColor: "red" } : {};
 
-
 	return (
 		<FormContext.Consumer>
 			{(context: IFormContext) => (

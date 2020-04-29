@@ -1,7 +1,6 @@
 import * as React from "react";
 import {IFieldProps} from "../field";
 import axios from "axios";
-import useAxios from "axios-hooks";
 
 export interface IFields {
 	[key: string]: IFieldProps;

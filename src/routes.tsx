@@ -2,11 +2,11 @@ import React from "react";
 import {Route, Switch} from "react-router-dom";
 import CardSelect from "./components/cardSelect";
 import Cart from "./components/cart";
-
 import Navbar from "./components/header";
-import {LoginForm} from "./components/login/loginForm";
+import {ContactUsForm} from "./components/contactUs/contactUsForm";
+import {Admin} from "./components/admin";
 
-const Routes: React.SFC = () => (
+const Routes: React.FunctionComponent = () => (
 	<div>
 		<Switch>
 			<Route
@@ -27,12 +27,19 @@ const Routes: React.SFC = () => (
 				)}
 			/>
 			<Route
-				path="/login"
+				path="/contactUs"
 				render={() => (
-					<LoginForm>
-					</LoginForm>
+					<ContactUsForm>
+					</ContactUsForm>
 				)}
 			/>
+			<Route
+			path="/admin"
+			render={() => (
+				<Admin>
+				</Admin>
+			)}
+		/>
 		</Switch>
 	</div>
 );

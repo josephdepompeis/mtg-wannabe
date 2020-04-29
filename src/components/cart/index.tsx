@@ -76,13 +76,13 @@ const CartComponent: React.FC<AllProps> = ({cartItems, addToCart, removeFromCart
 		removeFromCart(item);
 	};
 
-	const [{data, loading, error}, refetch] = useAxios(
+	const [{data, loading, error}] = useAxios(
 		'/movies'
 	);
 
-	if (loading) return <p>Loading...</p>
-	if (error) return <p>Error!</p>
-	if (data) return <p>{JSON.stringify(data)}</p>
+	if (loading) {return <p>Loading...</p>}
+	if (error) {return <p>Error!</p>}
+	if (data) {return <p>{JSON.stringify(data)}</p>}
 
 	return (
 		<CartContainer>

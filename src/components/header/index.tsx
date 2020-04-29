@@ -62,7 +62,7 @@ const Header: React.FC<AllProps> = ({data, loading, errors, children}) => {
 			<NavContainer>
 				<NavHeader>
 					<Link to="/">Home</Link>
-					<Link to="/login">Login</Link>
+					<Link to="/contactUs">Contact Us</Link>
 
 				</NavHeader>
 				<NavCart>
