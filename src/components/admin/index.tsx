@@ -51,6 +51,8 @@ export const Admin: React.FunctionComponent = () => {
 	return (
 		<div>
 			<AddToCartButton onClick={() => addSetToDB("STU")}>ADD STU CARD SET</AddToCartButton>
+			<AddToCartButton onClick={() => addSetToDB("IKO")}>ADD IKO CARD SET</AddToCartButton>
 		</div>
+
 	);
 };
