@@ -185,17 +185,11 @@ export class Form extends React.Component<IFormProps, IFormState> {
 		return !this.haveErrors(errors);
 	}
 
-
-
-
-
 	/**
 	 * Submits the form to the http api
 	 * @returns {boolean} - Whether the form submission was successful or not
 	 */
 	private async submitForm(): Promise<boolean> {
-
-
 		try {
 			console.log(this.state.values);
 			const response = axios.post('http://localhost:5000/contactUs', this.state.values);
