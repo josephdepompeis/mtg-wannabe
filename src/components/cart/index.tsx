@@ -4,11 +4,10 @@ import {connect} from "react-redux";
 
 import {ApplicationState} from "../../store";
 import {Cart} from "../../store/cart/types";
-import {Inventory} from "../../store/inventory/types";
+import {Card} from "../../store/card/types";
 import {ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
 import {addToCart, removeFromCart} from "../../store/cart/action";
-import useAxios from "axios-hooks";
 
 const CartContainer = styled.div`
   /* height: 100%;
@@ -57,22 +56,22 @@ const RemoveFromCartButton = styled.button`
 
 interface propsFromState {
 	cartItems: Cart;
-	addToCart: (item: Inventory) => any,
-	removeFromCart: (item: Inventory) => any;
+	addToCart: (card: Card) => any,
+	removeFromCart: (card: Card) => any;
 }
 
 type AllProps = propsFromState;
 
 const CartComponent: React.FC<AllProps> = ({cartItems, addToCart, removeFromCart}) => {
-	const calculateCartItemPrice = (item: Inventory) => {
+	const calculateCartItemPrice = (item: Card) => {
 		return item.price * item.amount;
 	};
 
-	const addItemToCart = (item: Inventory) => {
+	const addItemToCart = (item: Card) => {
 		addToCart(item);
 	};
 
-	const removeItemFromCart = (item: Inventory) => {
+	const removeItemFromCart = (item: Card) => {
 		removeFromCart(item);
 	};
 
@@ -101,7 +100,7 @@ const CartComponent: React.FC<AllProps> = ({cartItems, addToCart, removeFromCart
 				{cartItems.items.map(item => {
 					return (
 						<CartListItemDiv>
-							<CartListItemImage src={item.image}/>
+							{/*<CartListItemImage src={item.image}/>*/}
 							<CardAttributeColumn>{item.name}</CardAttributeColumn>
 							<CardAttributeColumn>{item.amount}</CardAttributeColumn>
 							<CardAttributeColumn>${calculateCartItemPrice(item)}</CardAttributeColumn>

@@ -1,5 +1,5 @@
 import {CartActionTypes} from "./types";
-import {Inventory} from "../inventory/types";
+import {Card} from "../card/types";
 
 import {Action, ActionCreator, Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
@@ -28,7 +28,7 @@ export const fetchCartRequest: AppThunk = () => {
 
 export const addToCart: ActionCreator<ThunkAction<void,
 	ApplicationState,
-	Inventory,
+	Card,
 	Action<string>>> = item => {
 	return (dispatch: Dispatch): Action => {
 		try {
@@ -47,7 +47,7 @@ export const addToCart: ActionCreator<ThunkAction<void,
 
 export const removeFromCart: ActionCreator<ThunkAction<void,
 	ApplicationState,
-	Inventory,
+	Card,
 	Action<string>>> = item => {
 	return (dispatch: Dispatch): Action => {
 		try {

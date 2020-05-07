@@ -2,7 +2,7 @@ import {Reducer} from "redux";
 import find from 'lodash/find';
 
 import {CartActionTypes, cartState} from "./types";
-import {Inventory} from "../inventory/types";
+import {Card} from "../card/types";
 
 export const initialState: cartState = {
     data: {
@@ -26,7 +26,7 @@ const reducer: Reducer<cartState> = (state = initialState, action) => {
         }
         case CartActionTypes.ADD_TO_CART: {
             const cardAlreadyAdded = find(state.data.items, ['id', action.payload.id]);
-            let updatedItemsState: Inventory[];
+            let updatedItemsState: Card[];
             // if card already exists in state, update amount
             if (cardAlreadyAdded) {
                 cardAlreadyAdded.amount++;

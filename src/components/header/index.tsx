@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {Link} from "react-router-dom";
 import {Cart} from "../../store/cart/types";
 import {ApplicationState} from "../../store";
-import {Inventory} from "../../store/inventory/types";
+import {Card} from "../../store/card/types";
 
 const NavContainer = styled.div`
   width: 100%;
@@ -49,7 +49,7 @@ interface propsFromState {
 type AllProps = propsFromState;
 
 const Header: React.FC<AllProps> = ({data, loading, errors, children}) => {
-	const calculateCartItemAmount = (cartItems: Inventory[]) => {
+	const calculateCartItemAmount = (cartItems: Card[]) => {
 		let amountTotal = 0;
 		cartItems.forEach(item => {
 			amountTotal = amountTotal + item.amount;

@@ -3,14 +3,10 @@ import {connect} from "react-redux";
 import styled from "styled-components";
 
 import {ApplicationState} from "../../store";
-import {Inventory} from "../../store/inventory/types";
-import {fetchRequest} from "../../store/inventory/action";
-import {ThunkDispatch} from "redux-thunk";
-import {AnyAction} from "redux";
-import Card from "../card";
-import axios from "axios";
-import {stringify} from "querystring";
+import {Card} from "../../store/card/types";
 
+import axios from "axios";
+import Boner from "../cardTile";
 const Container = styled.div`
   width: 100%;
   max-width: 1170px;
@@ -24,19 +20,20 @@ const CardListItems = styled.div`
 
 interface PropsFromState {
 	loading: boolean;
-	data: Inventory[];
+	data: Card[];
 	errors?: string;
 }
 
 interface propsFromDispatch {
-	fetchRequest: () => any;
+	// fetchRequest: () => any;
 }
 
 type AllProps = PropsFromState & propsFromDispatch;
 
-const CardSelect: React.FC<AllProps> = ({loading, errors, data, fetchRequest
+const CardSelect: React.FC<AllProps> = ({loading, errors, data
 }) => {
-	const [cards, setCards] = useState<Inventory[]>([]);
+	const [cards, setCards] = useState<Card[]>([]);
+
 	const fetchData = async () => {
 		try {
 			const cards = await axios.get('http://localhost:5000/cards');
@@ -81,25 +78,25 @@ const CardSelect: React.FC<AllProps> = ({loading, errors, data, fetchRequest
 		<Container>
 			<CardListItems>
 				{cards.map(item => {
-					return <Card item={item} key={item.id}/>;
+					return <Boner item={item} key={item.id}/>;
 				})}
 			</CardListItems>
 		</Container>
 	);
 };
 
-const mapStateToProps = ({inventory}: ApplicationState) => ({
-	loading: inventory.loading,
-	errors: inventory.errors,
-	data: inventory.data,
+const mapStateToProps = ({cards}: ApplicationState) => ({
+	loading: cards.loading,
+	errors: cards.errors,
+	data: cards.data,
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
-	return {
-		fetchRequest: () => {
-			dispatch(fetchRequest());
-		}
-	};
-};
+// const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
+// 	return {
+// 		fetchRequest: () => {
+// 			dispatch(fetchRequest());
+// 		}
+// 	};
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardSelect);
+export default connect(mapStateToProps)(CardSelect);

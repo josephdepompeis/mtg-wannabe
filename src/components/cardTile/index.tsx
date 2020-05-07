@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import styled from "styled-components";
-import {Inventory} from "../../store/inventory/types";
+import {Card} from "../../store/card/types";
 import {addToCart, removeFromCart} from "../../store/cart/action";
 import {ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
@@ -58,23 +58,23 @@ const RemoveFromCartButton = styled.button`
 `;
 
 interface propsFromComponent {
-	item: Inventory;
+	item: Card;
 	cartItems: any;
 }
 
 interface propsFromDispatch {
-	addToCart: (item: Inventory) => any,
-	removeFromCart: (item: Inventory) => any;
+	addToCart: (item: Card) => any,
+	removeFromCart: (item: Card) => any;
 }
 
 type Props = propsFromComponent & propsFromDispatch;
 
-const Card: React.FC<Props> = ({item, addToCart, removeFromCart}) => {
-	const addItemToCart = (item: Inventory) => {
+const CardTile: React.FC<Props> = ({item, addToCart, removeFromCart}) => {
+	const addItemToCart = (item: Card) => {
 		addToCart(item);
 	};
 
-	const removeItemFromCart = (item: Inventory) => {
+	const removeItemFromCart = (item: Card) => {
 		removeFromCart(item);
 	};
 
@@ -106,4 +106,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Card);
+export default connect(mapStateToProps, mapDispatchToProps)(CardTile);

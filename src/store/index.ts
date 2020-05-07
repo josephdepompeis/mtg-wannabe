@@ -3,21 +3,21 @@ import {connectRouter, RouterState} from "connected-react-router";
 
 import {History} from "history";
 
-import {InventoryReducer} from "./inventory/reducer";
-import {InventoryState} from "./inventory/types";
+import {InventoryReducer} from "./card/reducer";
+import {InventoryState} from "./card/types";
 
 import {cartReducer} from "./cart/reducer";
 import {cartState} from "./cart/types";
 
 export interface ApplicationState {
 	cart: cartState;
-	inventory: InventoryState;
+	cards: InventoryState;
 	router: RouterState;
 }
 
 export const createRootReducer = (history: History) =>
 	combineReducers({
 		cart: cartReducer,
-		inventory: InventoryReducer,
+		cards: InventoryReducer,
 		router: connectRouter(history)
 	});

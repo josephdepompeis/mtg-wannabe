@@ -1,8 +1,8 @@
-import {Inventory} from "../inventory/types";
+import {Card} from "../card/types";
 
 export interface Cart {
 	id: number;
-	items: Inventory[];
+	items: Card[];
 }
 
 export enum CartActionTypes {
