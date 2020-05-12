@@ -5,6 +5,7 @@ import Cart from "./components/cart";
 import Navbar from "./components/header";
 import {ContactUsForm} from "./components/contactUs/contactUsForm";
 import {Admin} from "./components/admin";
+import {LoginForm} from "./components/login/loginForm";
 
 const Routes: React.FunctionComponent = () => (
 	<div>
@@ -34,12 +35,19 @@ const Routes: React.FunctionComponent = () => (
 				)}
 			/>
 			<Route
-			path="/admin"
-			render={() => (
-				<Admin>
-				</Admin>
-			)}
-		/>
+				path="/admin"
+				render={() => (
+					<Admin>
+					</Admin>
+				)}
+			/>
+			<Route
+				path="/login"
+				render={() => (
+					<LoginForm>
+					</LoginForm>
+				)}
+			/>
 		</Switch>
 	</div>
 );

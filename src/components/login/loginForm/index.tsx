@@ -1,8 +1,7 @@
 import * as React from "react";
-import {Form, IFields, isEmail, maxLength, required} from "../../form";
 import {Field} from "../../field";
-export const ContactUsForm: React.SFC = () => {
-
+import {Form, IFields, isEmail, maxLength, required} from "../../form";
+export const LoginForm: React.SFC = () => {
 	const fields: IFields = {
 		name: {
 			id: "name",

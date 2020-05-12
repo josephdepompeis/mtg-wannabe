@@ -6,7 +6,7 @@ import {ApplicationState} from "../../store";
 import {Card} from "../../store/card/types";
 
 import axios from "axios";
-import Boner from "../cardTile";
+import CardTile from "../cardTile";
 const Container = styled.div`
   width: 100%;
   max-width: 1170px;
@@ -78,7 +78,7 @@ const CardSelect: React.FC<AllProps> = ({loading, errors, data
 		<Container>
 			<CardListItems>
 				{cards.map(item => {
-					return <Boner item={item} key={item.id}/>;
+					return <CardTile item={item} key={item.id}/>;
 				})}
 			</CardListItems>
 		</Container>

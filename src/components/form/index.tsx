@@ -7,9 +7,6 @@ export interface IFields {
 }
 
 interface IFormProps {
-	/* The http path that the form will be posted to */
-	action: string;
-
 	/* The props for all the fields on the form */
 	fields: IFields;
 
@@ -51,7 +48,6 @@ export interface IFormContext extends IFormState {
  * Note that we need to pass createContext a default value which is why undefined is unioned in the type // using other way
  */
 export const FormContext = React.createContext({} as IFormContext);
-// export const FormContext:IFormContext;
 
 /**
  * Validates whether a field has a value

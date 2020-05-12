@@ -85,7 +85,7 @@ const CardTile: React.FC<Props> = ({item, addToCart, removeFromCart}) => {
 			</CardFigure>
 			<CardHeader>{item.name}</CardHeader>
 			<AddToCartButton onClick={() => addItemToCart(item)}>Add To Cart</AddToCartButton>
-			{(item.amount !== 0) &&
+			{(item.amount > 0) &&
             <RemoveFromCartButton onClick={() => removeItemFromCart(item)}>Remove From Cart</RemoveFromCartButton>}
 			<CardDescription>
 				<CardSetText>Set: {item.set}</CardSetText>
