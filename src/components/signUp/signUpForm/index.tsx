@@ -1,17 +1,16 @@
 import * as React from "react";
-import {Form, IFields, isEmail, maxLength, required} from "../../form";
 import {Field} from "../../field";
+import {Form, IFields, isEmail, required} from "../../form";
 import axios from "axios";
 
-export class ContactUsForm extends React.Component {
-
+export class SignUpForm extends React.Component {
 	/**
 	 * Submits the form to the http api
 	 * @returns {boolean} - Whether the form submission was successful or not
 	 */
-	private async submitContactUs(formValues: {}): Promise<boolean> {
+	private async submitSignUp(): Promise<boolean> {
 		try {
-			const response = axios.post('http://localhost:5000/contactUs', formValues);
+			const response = axios.post('http://localhost:5000/contactUs', {});
 
 			// Success 🎉
 			console.log(response);
@@ -43,14 +42,19 @@ export class ContactUsForm extends React.Component {
 				return error;
 			}
 		}
-	}
+	};
 
 	public render() {
 
 		const fields: IFields = {
-			name: {
-				id: "name",
-				label: "Name",
+			firstName: {
+				id: "firstName",
+				label: "First Name",
+				validation: {rule: required},
+			},
+			lastName: {
+				id: "lastName",
+				label: "Last Name",
 				validation: {rule: required},
 			},
 			email: {
@@ -58,36 +62,26 @@ export class ContactUsForm extends React.Component {
 				label: "Email",
 				validation: {rule: isEmail},
 			},
-			reason: {
-				id: "reason",
-				label: "Reason",
-				editor: "dropdown",
-				options: ["", "Marketing", "Support", "Feedback", "Jobs"],
+			password: {
+				id: "password",
+				label: "Password",
 				validation: {rule: required},
 			},
-			notes: {
-				id: "notes",
-				label: "Notes",
-				editor: "multilinetextbox",
-				validation: {rule: maxLength, args: 1000},
-			}
 		};
-
 
 		return (
 			<Form
 				fields={fields}
-				submit={this.submitContactUs}
+				submit={this.submitSignUp}
 				render={() => (
 					<React.Fragment>
 						<div className="alert alert-info" role="alert">
-							Enter the information below and we'll get back to you as soon as we
-							can.
+							Register Now!!
 						</div>
-						<Field {...fields.name} />
+						<Field {...fields.firstName} />
+						<Field {...fields.lastName} />
 						<Field {...fields.email} />
-						<Field {...fields.reason} />
-						<Field {...fields.notes} />
+						<Field {...fields.password} />
 					</React.Fragment>
 				)}
 			/>

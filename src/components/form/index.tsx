@@ -10,6 +10,9 @@ interface IFormProps {
 	/* The props for all the fields on the form */
 	fields: IFields;
 
+	/* What is called after passing validation */
+	submit: (formValues: {}) => Promise<boolean>;
+
 	/* A prop which allows content to be injected */
 	render: () => React.ReactNode;
 }
@@ -109,7 +112,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
 	 * @param {IValues} values - The new field values
 	 */
 	private setValues = (values: IValues) => {
-		this.setState({ values: { ...this.state.values, ...values } });
+		this.setState({values: {...this.state.values, ...values}});
 	};
 
 	/**
@@ -146,7 +149,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
 		}
 		this.state.errors[fieldName] = newError;
 		this.setState({
-			errors: { ...this.state.errors, [fieldName]: newError }
+			errors: {...this.state.errors, [fieldName]: newError}
 		});
 		return newError;
 	};
@@ -163,8 +166,8 @@ export class Form extends React.Component<IFormProps, IFormState> {
 		console.log(this.state.values);
 
 		if (this.validateForm()) {
-			const submitSuccess: boolean = await this.submitForm();
-			this.setState({ submitSuccess });
+			const submitSuccess: boolean = await this.props.submit(this.state.values);
+			this.setState({submitSuccess});
 		}
 	};
 
@@ -177,7 +180,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
 		Object.keys(this.props.fields).map((fieldName: string) => {
 			errors[fieldName] = this.validate(fieldName);
 		});
-		this.setState({ errors });
+		this.setState({errors});
 		return !this.haveErrors(errors);
 	}
 
@@ -223,7 +226,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
 	}
 
 	public render() {
-		const { submitSuccess, errors } = this.state;
+		const {submitSuccess, errors} = this.state;
 		const context: IFormContext = {
 			...this.state,
 			setValues: this.setValues,
@@ -232,39 +235,39 @@ export class Form extends React.Component<IFormProps, IFormState> {
 
 		return (
 			<FormContext.Provider value={context}>
-			<form onSubmit={this.handleSubmit} noValidate={true}>
-				<div className="container">
+				<form onSubmit={this.handleSubmit} noValidate={true}>
+					<div className="container">
 
-					{this.props.render()}
+						{this.props.render()}
 
-					<div className="form-group">
-						<button
-							type="submit"
-							className="btn btn-primary"
-							disabled={this.haveErrors(errors)}
-						>
-							Submit
-						</button>
+						<div className="form-group">
+							<button
+								type="submit"
+								className="btn btn-primary"
+								disabled={this.haveErrors(errors)}
+							>
+								Submit
+							</button>
+						</div>
+						{submitSuccess && (
+							<div className="alert alert-info" role="alert">
+								The form was successfully submitted!
+							</div>
+						)}
+						{submitSuccess === false &&
+						!this.haveErrors(errors) && (
+							<div className="alert alert-danger" role="alert">
+								Sorry, an unexpected error has occurred
+							</div>
+						)}
+						{submitSuccess === false &&
+						this.haveErrors(errors) && (
+							<div className="alert alert-danger" role="alert">
+								Sorry, the form is invalid. Please review, adjust and try again
+							</div>
+						)}
 					</div>
-					{submitSuccess && (
-						<div className="alert alert-info" role="alert">
-							The form was successfully submitted!
-						</div>
-					)}
-					{submitSuccess === false &&
-					!this.haveErrors(errors) && (
-						<div className="alert alert-danger" role="alert">
-							Sorry, an unexpected error has occurred
-						</div>
-					)}
-					{submitSuccess === false &&
-					this.haveErrors(errors) && (
-						<div className="alert alert-danger" role="alert">
-							Sorry, the form is invalid. Please review, adjust and try again
-						</div>
-					)}
-				</div>
-			</form>
+				</form>
 			</FormContext.Provider>
 		);
 	}

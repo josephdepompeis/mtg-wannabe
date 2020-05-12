@@ -6,6 +6,7 @@ import Navbar from "./components/header";
 import {ContactUsForm} from "./components/contactUs/contactUsForm";
 import {Admin} from "./components/admin";
 import {LoginForm} from "./components/login/loginForm";
+import {SignUpForm} from "./components/signUp/signUpForm";
 
 const Routes: React.FunctionComponent = () => (
 	<div>
@@ -46,6 +47,13 @@ const Routes: React.FunctionComponent = () => (
 				render={() => (
 					<LoginForm>
 					</LoginForm>
+				)}
+			/>
+			<Route
+				path="/signUp"
+				render={() => (
+					<SignUpForm>
+					</SignUpForm>
 				)}
 			/>
 		</Switch>

@@ -12,3 +12,6 @@ this is very crude code, just wanted to display that i can be functional in reac
 3. tabs over spaces. didn't want to take the time to make this adjustment.
 4. code comments
 5. could do a better job typing things
+6. email fields need to be required.
+7. security is a joke atm.
+
