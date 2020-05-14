@@ -237,9 +237,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
 			<FormContext.Provider value={context}>
 				<form onSubmit={this.handleSubmit} noValidate={true}>
 					<div className="container">
-
 						{this.props.render()}
-
 						<div className="form-group">
 							<button
 								type="submit"

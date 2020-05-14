@@ -46,7 +46,6 @@ export class ContactUsForm extends React.Component {
 	}
 
 	public render() {
-
 		const fields: IFields = {
 			name: {
 				id: "name",
@@ -72,7 +71,6 @@ export class ContactUsForm extends React.Component {
 				validation: {rule: maxLength, args: 1000},
 			}
 		};
-
 
 		return (
 			<Form

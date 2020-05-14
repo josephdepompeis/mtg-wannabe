@@ -24,9 +24,7 @@ interface PropsFromState {
 	errors?: string;
 }
 
-interface propsFromDispatch {
-	// fetchRequest: () => any;
-}
+interface propsFromDispatch {}
 
 type AllProps = PropsFromState & propsFromDispatch;
 
@@ -90,13 +88,5 @@ const mapStateToProps = ({cards}: ApplicationState) => ({
 	errors: cards.errors,
 	data: cards.data,
 });
-
-// const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
-// 	return {
-// 		fetchRequest: () => {
-// 			dispatch(fetchRequest());
-// 		}
-// 	};
-// };
 
 export default connect(mapStateToProps)(CardSelect);
