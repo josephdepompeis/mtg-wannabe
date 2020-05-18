@@ -8,9 +8,10 @@ export class SignUpForm extends React.Component {
 	 * Submits the form to the http api
 	 * @returns {boolean} - Whether the form submission was successful or not
 	 */
-	private async submitSignUp(): Promise<boolean> {
+	private async submitSignUp(formData: {}): Promise<boolean> {
+
 		try {
-			const response = axios.post('http://localhost:5000/contactUs', {});
+			const response = axios.post('http://localhost:5000/signUp', formData);
 
 			// Success 🎉
 			console.log(response);
@@ -45,7 +46,6 @@ export class SignUpForm extends React.Component {
 	};
 
 	public render() {
-
 		const fields: IFields = {
 			firstName: {
 				id: "firstName",
