@@ -1,17 +1,17 @@
 import * as React from "react";
 import {Field} from "../../field";
-import {Form, IFields, isEmail, maxLength, required} from "../../form";
+import {Form, IFields, isEmail, required} from "../../form";
 import axios from "axios";
 
 export class LoginForm extends React.Component {
-
 	/**
 	 * Submits the form to the http api
 	 * @returns {boolean} - Whether the form submission was successful or not
 	 */
-	private async submitLogin(formValues: {}): Promise<boolean> {
+	private async submitLogin(formData: {}): Promise<boolean> {
+
 		try {
-			const response = axios.post('http://localhost:5000/contactUs', {});
+			const response = axios.post('http://localhost:5000/signUp', formData);
 
 			// Success 🎉
 			console.log(response);
@@ -46,47 +46,30 @@ export class LoginForm extends React.Component {
 	};
 
 	public render() {
-
 		const fields: IFields = {
-			name: {
-				id: "name",
-				label: "Name",
-				validation: {rule: required},
-			},
 			email: {
 				id: "email",
 				label: "Email",
 				validation: {rule: isEmail},
 			},
-			reason: {
-				id: "reason",
-				label: "Reason",
-				editor: "dropdown",
-				options: ["", "Marketing", "Support", "Feedback", "Jobs"],
+			password: {
+				id: "password",
+				label: "Password",
 				validation: {rule: required},
 			},
-			notes: {
-				id: "notes",
-				label: "Notes",
-				editor: "multilinetextbox",
-				validation: {rule: maxLength, args: 1000},
-			}
 		};
 
 		return (
 			<Form
-				submit={this.submitLogin}
 				fields={fields}
+				submit={this.submitLogin}
 				render={() => (
 					<React.Fragment>
 						<div className="alert alert-info" role="alert">
-							Enter the information below and we'll get back to you as soon as we
-							can.
+							Login Here:
 						</div>
-						<Field {...fields.name} />
 						<Field {...fields.email} />
-						<Field {...fields.reason} />
-						<Field {...fields.notes} />
+						<Field {...fields.password} />
 					</React.Fragment>
 				)}
 			/>
