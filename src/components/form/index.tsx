@@ -190,8 +190,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
 	 */
 	private async submitForm(): Promise<boolean> {
 		try {
-			console.log(this.state.values);
-			const response = axios.post('http://localhost:5000/contactUs', this.state.values);
+			const response = await axios.post('http://localhost:5000/contactUs', this.state.values);
 
 			// Success 🎉
 			console.log(response);

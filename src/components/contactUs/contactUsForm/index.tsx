@@ -11,7 +11,7 @@ export class ContactUsForm extends React.Component {
 	 */
 	private async submitContactUs(formValues: {}): Promise<boolean> {
 		try {
-			const response = axios.post('http://localhost:5000/contactUs', formValues);
+			const response = await axios.post('http://localhost:5000/contactUs', formValues);
 
 			// Success 🎉
 			console.log(response);

@@ -11,12 +11,13 @@ export class LoginForm extends React.Component {
 	private async submitLogin(formData: {}): Promise<boolean> {
 
 		try {
-			const response = axios.post('http://localhost:5000/login', formData);
+			const response = await axios.post('http://localhost:5000/login', formData);
 
 			// Success 🎉
 			console.log(response);
 			return true;
 		} catch (error) {
+			console.log(error);
 			// Error 😨
 			if (error.response) {
 				/*

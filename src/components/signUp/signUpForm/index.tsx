@@ -11,7 +11,7 @@ export class SignUpForm extends React.Component {
 	private async submitSignUp(formData: {}): Promise<boolean> {
 
 		try {
-			const response = axios.post('http://localhost:5000/signUp', formData);
+			const response = await axios.post('http://localhost:5000/signUp', formData);
 
 			// Success 🎉
 			console.log(response);

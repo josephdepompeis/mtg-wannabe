@@ -10,11 +10,10 @@ const AddToCartButton = styled.button`
   cursor: pointer;
 `;
 
-export const Admin: React.FunctionComponent = () => {
-
-	const addSetToDB = (setCode: string) => {
+export class Admin extends React.Component {
+	public async addSetToDB(setCode: string) {
 		try {
-			const response = axios.post('http://localhost:5000/cardSets/add', {setCode: setCode});
+			const response = await axios.post('http://localhost:5000/cardSets/add', {setCode: setCode});
 
 			// Success 🎉
 			console.log(response);
@@ -48,12 +47,14 @@ export const Admin: React.FunctionComponent = () => {
 		}
 	};
 
-	return (
-		<div>
-			<AddToCartButton onClick={() => addSetToDB("STU")}>ADD STU CARD SET</AddToCartButton>
-			<AddToCartButton onClick={() => addSetToDB("IKO")}>ADD IKO CARD SET</AddToCartButton>
-			<AddToCartButton onClick={() => addSetToDB("THB")}>ADD THB CARD SET</AddToCartButton>
-			<AddToCartButton onClick={() => addSetToDB("ELD")}>ADD ELD CARD SET</AddToCartButton>
-		</div>
-	);
-};
+	public render() {
+		return (
+			<div>
+				<AddToCartButton onClick={() => this.addSetToDB("STU")}>ADD STU CARD SET</AddToCartButton>
+				<AddToCartButton onClick={() => this.addSetToDB("IKO")}>ADD IKO CARD SET</AddToCartButton>
+				<AddToCartButton onClick={() => this.addSetToDB("THB")}>ADD THB CARD SET</AddToCartButton>
+				<AddToCartButton onClick={() => this.addSetToDB("ELD")}>ADD ELD CARD SET</AddToCartButton>
+			</div>
+		);
+	};
+}
